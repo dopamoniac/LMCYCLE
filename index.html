@@ -518,6 +518,47 @@
             opacity: 1;
         }
 
+        /* Mobile Floating Cart Button */
+        .mobile-cart-button {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--neon-green);
+            border-radius: 50%;
+            justify-content: center;
+            align-items: center;
+            color: var(--obsidian);
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 255, 65, 0.4);
+            z-index: 999;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-cart-button:hover {
+            background-color: var(--neon-cyan);
+            transform: scale(1.1);
+        }
+
+        .mobile-cart-button .mobile-cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--ultraviolet);
+            color: var(--platinum);
+            font-size: 0.7rem;
+            font-weight: 700;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .mobile-menu-toggle {
@@ -557,6 +598,11 @@
                 width: 100%;
                 right: -100%;
             }
+
+            /* Show mobile cart button */
+            .mobile-cart-button {
+                display: flex;
+            }
         }
     </style>
     
@@ -595,6 +641,12 @@
             </ul>
         </div>
     </nav>
+
+    <!-- Mobile Cart Button -->
+    <div class="mobile-cart-button" id="mobileCartButton">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="mobile-cart-count" id="mobileCartCount">0</span>
+    </div>
 
     <!-- Cart Sidebar -->
     <div class="cart-sidebar" id="cartSidebar">
@@ -665,7 +717,7 @@
                     <p>Depuis plus de 10 ans, LMCYCLE accompagne les familles dans le choix du vélo parfait pour leurs enfants. Nous proposons des bicyclettes sécurisées, confortables et au design innovant, conçues pour transformer chaque sortie en un moment de plaisir et d'aventure.
                        Notre expertise et notre passion pour la mobilité enfantine nous permettent de garantir des produits fiables et un service client attentif et personnalisé. Avec LMCYCLE, chaque enfant découvre la liberté sur deux roues en toute sécurité.</p>
                 </div>
-                <div class="about-image" style="background-image: url('https://z-cdn-media.chatglm.cn/files/7393a15e-485c-4cf1-99de-43418c82a30d.jpeg?auth_key=1866002135-8316d30dee5c4d74847d86385e94b926-0-5397168f302de2a06f6905f7234b5a64')"></div>
+                <div class="about-image" style="background-image: url('https://z-cdn-media.chatglm.cn/files/21992aa4-604a-4f50-b344-1acfc7685917.jpeg?auth_key=1866096881-f5309e562d9144a2a56d9f32ba1e0325-0-bde7a0d4d9a7bfec0754d522f91295ca')"></div>
             </div>
             <div class="values-grid">
                 <div class="value-card">
@@ -974,6 +1026,8 @@
         // Cart Elements
         const cartIcon = document.getElementById('cartIcon');
         const cartCount = document.getElementById('cartCount');
+        const mobileCartButton = document.getElementById('mobileCartButton');
+        const mobileCartCount = document.getElementById('mobileCartCount');
         const cartSidebar = document.getElementById('cartSidebar');
         const closeCart = document.getElementById('closeCart');
         const cartItems = document.getElementById('cartItems');
@@ -1006,8 +1060,14 @@
                 navLinks.classList.toggle('active');
             });
 
-            // Cart toggle
+            // Cart toggle - Desktop
             cartIcon.addEventListener('click', () => {
+                cartSidebar.classList.add('active');
+                overlay.classList.add('active');
+            });
+
+            // Cart toggle - Mobile
+            mobileCartButton.addEventListener('click', () => {
                 cartSidebar.classList.add('active');
                 overlay.classList.add('active');
             });
@@ -1119,6 +1179,7 @@
             // Update cart count
             const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
             cartCount.textContent = totalItems;
+            mobileCartCount.textContent = totalItems;
             
             // Update cart items
             if (cart.length === 0) {
@@ -1865,6 +1926,11 @@
                     .order-button {
                         width: 100%;
                     }
+
+                    /* Adjust mobile cart button position to avoid conflict with back to top button */
+                    .mobile-cart-button {
+                        bottom: 80px;
+                    }
                 }
             `;
             
@@ -1892,9 +1958,9 @@
             const lqipUrl = lqipCanvas.toDataURL();
             heroBg.style.backgroundImage = `linear-gradient(rgba(10, 10, 10, 0.7), rgba(10, 10, 10, 0.85)), url('${lqipUrl}')`;
             
-            // Preload the actual image
+            // Preload the actual image - Using the updated background image
             const img = new Image();
-            img.src = 'https://z-cdn-media.chatglm.cn/files/fd41b3df-2313-4835-9eea-b7c1f16eb291.png?auth_key=1866002608-a3126c3c0e0b49bd8a817205f3f4f5de-0-438105998f597d70844db479c69c183b';
+            img.src = 'https://z-cdn-media.chatglm.cn/files/a2dfff94-7496-4aaa-9b11-dce7a3a1e84c.png?auth_key=1866096620-cfd6caafa6824a0eb0913eaf8aa7ede8-0-87db4a171a1ba32809764c1e8d2ffb98';
             img.onload = function() {
                 // Once loaded, replace the LQIP with the actual image
                 setTimeout(() => {
@@ -2100,6 +2166,3 @@
     </script>
 </body>
 </html>
-
-
-
