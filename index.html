@@ -1727,6 +1727,7 @@
                     background-position: center;
                     position: relative;
                     overflow: hidden;
+                    cursor: pointer; /* Add cursor pointer to indicate clickable */
                 }
 
                 .product-image::before {
@@ -2372,7 +2373,7 @@
                 ).join('');
 
                 card.innerHTML = `
-                    <div class="product-image" style="background-image: url('${product.image}')"></div>
+                    <div class="product-image" style="background-image: url('${product.image}')" data-id="${product.id}"></div>
                     <div class="product-info">
                         <h3 class="product-name">${product.name}</h3>
                         <p class="product-aura">${product.aura}</p>
@@ -2406,6 +2407,23 @@
                     e.preventDefault();
                     const productId = parseInt(btn.getAttribute('data-id'));
                     addToCart(productId);
+                });
+            });
+
+            // Add event listeners to product images for mobile
+            document.querySelectorAll('.product-image').forEach(image => {
+                // For both click and touch events
+                image.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const productId = parseInt(image.getAttribute('data-id'));
+                    showProductDetail(productId);
+                });
+                
+                // Add touch event for mobile
+                image.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                    const productId = parseInt(image.getAttribute('data-id'));
+                    showProductDetail(productId);
                 });
             });
         }
@@ -2547,4 +2565,3 @@
     </script>
 </body>
 </html>
-
