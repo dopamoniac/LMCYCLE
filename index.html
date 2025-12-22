@@ -539,7 +539,7 @@
         .cart-item-image {
             width: 80px;
             height: 80px;
-            background-size: contain;
+            background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             border-radius: 5px;
@@ -1206,7 +1206,7 @@
 
         .variant-image {
             height: 100px;
-            background-size: contain;
+            background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             position: relative;
@@ -1227,11 +1227,11 @@
             color: var(--text-secondary);
         }
 
-        /* Image Container Styles - Improved for Proper Fitting */
+        /* Image Container Styles - Full Size */
         .product-image {
             width: 100%;
             height: 300px;
-            background-size: contain;
+            background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             position: relative;
@@ -1244,7 +1244,7 @@
         .product-image img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: cover;
             display: block;
         }
 
@@ -1986,7 +1986,7 @@
             }
         ];
 
-        // Size data for the calculator
+        // Size data for calculator
         const sizeData = [
             { ageRange: "2-4 ans", heightRange: "85-100 cm", bikeSize: "12 pouces", minHeight: 85, maxHeight: 100 },
             { ageRange: "3-5 ans", heightRange: "95-110 cm", bikeSize: "14 pouces", minHeight: 95, maxHeight: 110 },
@@ -2362,7 +2362,7 @@
             productFamiliesContainer.innerHTML = '';
             
             productFamilies.forEach(family => {
-                // Get the products for this family
+                // Get products for this family
                 const familyProducts = family.productIds.map(id => 
                     products.find(p => p.id === id)
                 ).filter(Boolean);
@@ -2528,24 +2528,24 @@
                         }, 1000);
                     });
                     
-                    // Handle click on the image
+                    // Handle click on image
                     image.addEventListener('click', (e) => {
-                        // Get click position relative to the image
+                        // Get click position relative to image
                         const rect = image.getBoundingClientRect();
                         const x = e.clientX - rect.left;
                         const y = e.clientY - rect.top;
                         
-                        // Calculate center of the image
+                        // Calculate center of image
                         const centerX = rect.width / 2;
                         const centerY = rect.height / 2;
                         
                         // Calculate distance from center
                         const distance = Math.sqrt(Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2));
                         
-                        // Define radius of clickable area (40% of the smaller dimension)
+                        // Define radius of clickable area (40% of smaller dimension)
                         const radius = Math.min(rect.width, rect.height) * 0.4;
                         
-                        // Check if the click is within the center area
+                        // Check if click is within the center area
                         if (distance <= radius) {
                             e.preventDefault();
                             const productId = parseInt(image.getAttribute('data-id'));
